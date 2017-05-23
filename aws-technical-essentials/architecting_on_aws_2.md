@@ -1,4 +1,4 @@
-## Day 2
+# Day 2
 ---
 [aws certification](https://d0.awsstatic.com/training-and-certification/docs-sa-assoc/AWS_certified_solutions_architect_associate_blueprint.pdf) 
 
@@ -141,7 +141,7 @@ example: Users by last name A to M in one database. M to Z in another database.
 # LAB 3
 
 
-## Automating and Decoupling Your Infrastructure
+## 6. Automating Your Infrastructure
 Automation Scripting:
 * Reliable - Eliminate human error. 
 * Reproducability - dev, test, prod
@@ -161,12 +161,34 @@ Automation Scripting:
 * ___BP___ Parametrize ec2 key pairs, security group names, subnet IDs, EBS Snapshot IDs
 * ___BP___ Similar to coding standards, split your templates into modular templates
 
+### Other infra as code service option on AWS - "AWS elastic Beanstalk"
+* Specifically for web apps, you pick a web platform where your app will be deployed
+* automatically handles autoscaling, ELBs etc etc
+blue/green deployment
+* keep both elbs warm
+* roll back quickly if anything goes wrong
 
 
+## 7. Decoupling Your Infrastructure
+___BP___ "Change or failure of one component should not affect other components"
+#### Strategies:
+* use a load balancer for decoupling between web servers and app servers
+* serverless architecture
+* use queues (kafka, kinesis, etc) allow for asynchronous message processing and decouplign of components
+* static web assests stored externally such as s3
+* external configuration server
 
-Forklifting an Existing Application onto AWS
 
+### SOA Service-Oriented Architecture
+#### MicroServices
+* small independant services within an SOA
+* each service is focused on one small task
 
-Automating and Decoupling Your Infrastructure
-Designing Storage at Scale
-Hosting a New Web Application on AWS
+#### Anti-patterns
+* apps communicate directly with one another
+* backend servers handling user state storage and user authentication
+
+### Simple Queue Service SQS
+* 256 kb message limit
+* no guarantee of ordering
+* you are reponsible for queue clean up. Messages stay on queue until explicity deleted
