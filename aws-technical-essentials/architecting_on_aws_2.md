@@ -92,20 +92,81 @@ Action examples;
 #### AutoScaling
 TV operator example: Champions League Final, huge peak of viewer, so you need extra instances on this date so we scale up. After the event we scale back down to or usual traffic.
 * launch across AZs
-* Scale up very quickly (automate process). Scale down very slowly, so users are not impacted.
+* Scale up very quickly (automate process). Scale down very slowly, so users are not impacted. (Avoiding AS thrashing)
+* Ensure your autoscale across AZs
+* Take into account how long it is over the threshold for, if it is 1 sec we dont care, but over 80% for more than x minutes, then alarm is triggered.
+* Set min and max values carefully
 
 How does AS work?
-1. Launch Configuration - What
+___Launch Configuration - What___
 * name, ami, instance type etc
-2. Auto scaling group - Where
+___Auto scaling group - Where___
 * Name, Launch Config Name, min and max, load balancer, desired capacity (between min and max)
-3. When
+___When___
 * Alarms - Increase or decrease EC2 instances based on cloudwatch alarms
 * Scheduled Acion - tells AS to perform a scaling action at a certain time in the future.
 
+
+
+#### EC2 Auto Recovery
+* Only available for larger instances types
+* Will ahve same IP, same metadata, so config but will lose all data in memory of course
+* Unlike autoscaling (create and terminate instances so the IPs will be different)
+
+
+
+### Scaling Data Stores
+---
+#### RDS Scaling
+Scale up or down. This will trigger a reboot in the background.
+Offload read traffic to Read Replicas. Keep master instance for write operations.
+Caching:
+Put a cache in front of RDS. Maybe you can cache 80% of operations.
+
+Sharding:
+* without shards all data resides in one partition.
+* sharding can spilt your data into different chunks (shards)
+example: Users by last name A to M in one database. M to Z in another database.
+
+
+## AWS Lambda and Event-Driven Scaling
+* Allows to run code with managing infrastructure like EC2 instances and AS groups
+* Multiple language support (Java, Python, Nodejs)
+* Lambda functions can call other lambda functions
+* Difficult to test/debug as it needs to be run on the environment
+* [serverless.org can be used for testing and replicating aws env](https://serverless.com/framework/docs/providers/aws/guide/quick-start/)
+* auto scale
+* Never use password or access keys within lambda, always use roles for authentication
+
+# LAB 3
+
+
+## Automating and Decoupling Your Infrastructure
+Automation Scripting:
+* Reliable - Eliminate human error. 
+* Reproducability - dev, test, prod
+* ___BP___ Use disposable resources: Automate deployment of new resources with identical configurations.
+* Switch to new IP addresses automagically EIP
+* ___BP___ Infrastructure as code - Keep scripts and config version controlled.
+
+### Cloud Formation - Build your environemnt - "Infrastructure as code"
+* launch, configure and connect AWS resources
+* ___template___ - json formatted file that describes each resource to be created, that works as our source code
+* ___cloudformation engine___ - interprets json file template into stacks of AWS resources
+* ___stack___ - collection of resources created by cloud formation
+* [terraform.io](terraform.io)
+* depends on - depends on another resource
+* Wait conditions - wait until something is up, ready
+* conditions - add conditional logic
+* ___BP___ Parametrize ec2 key pairs, security group names, subnet IDs, EBS Snapshot IDs
+* ___BP___ Similar to coding standards, split your templates into modular templates
+
+
+
+
 Forklifting an Existing Application onto AWS
 
-Event-Driven Scaling
+
 Automating and Decoupling Your Infrastructure
 Designing Storage at Scale
 Hosting a New Web Application on AWS
