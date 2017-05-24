@@ -137,6 +137,8 @@ example: Users by last name A to M in one database. M to Z in another database.
 * [serverless.org can be used for testing and replicating aws env](https://serverless.com/framework/docs/providers/aws/guide/quick-start/)
 * auto scale
 * Never use password or access keys within lambda, always use roles for authentication
+* Max 5 minute timeout per lambda.  BP is to split each lambda to counteract agaist this time issue
+* Also Lamdba can be triggered from within a Data Pipeline where the long ETL processes with be done in DPL and short processes with Lambda.
 
 # LAB 3
 
