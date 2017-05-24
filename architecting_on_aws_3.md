@@ -74,6 +74,7 @@ Amazon Virtual Private Cloud (VPC) lets you provision a private, isolated sectio
 #### Detective controls: 
 AWS CloudTrail records AWS API calls, AWS Config provides a detailed inventory of your AWS resources and configuration, and Amazon CloudWatch is a monitoring service for AWS resources.
 
+Inline-style:
 ![alt text](https://github.com/joeyfaherty/aws/tree/master/img/pic.png "Key Services for Security")
 
 ## DDoS Attack Mitigation
@@ -180,12 +181,50 @@ Select solutions based on:
   2. Billing tab
 
 
-# 5. 
+# 5. Operational Excellence
+1. Preperation: runbook/playbook/prodccedure list
+2. CI / CD
+3. Response: alerts/mail/lambda triggers
 
 
-
+# 6. Design Patterns and Sample Architectures
+## HA Multi-AZ Pattern
+Pros:
+  * If an AZ fails, the system will still be available as a whole.
+Implementation:
+  * create an ami for your instance.
+  * spin up multiple instances using that same AMI in multiple AZs.
+  * create a load balancer in multiple AZs and attached the instances
+  * confirm instatces are attached to load balancer and are in a healthy state
+  
+## HA Database Pattern
+Pros:
+  * One connection string for master and slave with automatic failover.
+  * Maintenance does not bring down DB but causes failover.
+  * Read replicas take load off of the master
+Implementation:
+  * create an RDS instance.
+  * deploy in multi-AZ.
+  * create read replicas for each zone
+  
+## Floating IP Pattern
+Problem: Use Elastic IP when your instance fails or you need to upgrade, traffic can be pushed to another instance with the same IP address
+Pros:
+  * Since we move the EIP, DNS doesnt change.
+  * EIP can be moved across instances in different zones in the same region.
+Implementation:
+  * allocate the EIP address for the ec2 instance.
+  * upon failure or upgrade, launch a new ec2 instance.
+  * disassociate the EIP address from the ec2 instance and associate it to the new ec2 instance.
+  
+## State Sharing Pattern
+Problem: You want your app to be stateless inorder to better scale horizontally by moving state into a KV store.
+Pros:
+  * Allows you to scale out without loss of state info.
+Implementation:
+  * use elasticache and dynamodb for data storage.
 
 Certification:
-Udemy - Cloud Guru Cert Prep
+Udemy - Cloud Guru Cert Prep - AWS Certified Architect Associate
 5 locations in NL for certification
 
