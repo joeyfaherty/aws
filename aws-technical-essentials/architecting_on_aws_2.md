@@ -32,13 +32,13 @@
 
 ***"everything fails, all of the time"***
 
-App 
-    => DB Main (Anti-pattern)
-App
+App  
+    => DB Main (Anti-pattern)  
+App  
 
-App 
-    => DB Main => DB Secondary (Best Practice)
-App
+App  
+    => DB Main => DB Secondary (Best Practice)  
+App  
 
 It is better to have an active/passive architecture where data is replicated to a secondary node so that there is no ___single point of failure___.
 
