@@ -74,7 +74,7 @@ Amazon Virtual Private Cloud (VPC) lets you provision a private, isolated sectio
 #### Detective controls: 
 AWS CloudTrail records AWS API calls, AWS Config provides a detailed inventory of your AWS resources and configuration, and Amazon CloudWatch is a monitoring service for AWS resources.
 
-![alt text](https://github.com/joeyfaherty/aws/img/pic.png "Key Services for Security")
+![alt text](https://github.com/joeyfaherty/aws/tree/master/img/pic.png "Key Services for Security")
 
 ## DDoS Attack Mitigation
 Prevention strategies
